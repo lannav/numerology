@@ -1,6 +1,4 @@
 import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/hooks/use-language";
@@ -18,16 +16,14 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <TooltipProvider>
-          <div className="dark">
-            <Toaster />
-            <Router />
-          </div>
-        </TooltipProvider>
-      </LanguageProvider>
-    </QueryClientProvider>
+    <LanguageProvider>
+      <TooltipProvider>
+        <div className="dark">
+          <Toaster />
+          <Router />
+        </div>
+      </TooltipProvider>
+    </LanguageProvider>
   );
 }
 

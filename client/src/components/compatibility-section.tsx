@@ -15,7 +15,7 @@ import {
   calculateCompatibilityScore,
   getCompatibilityInterpretation
 } from "@/lib/numerology";
-import type { CompatibilityTest } from "@shared/schema";
+import type { CompatibilityTest } from "@/lib/schema";
 
 type TestType = "lifePath" | "name" | "complete";
 

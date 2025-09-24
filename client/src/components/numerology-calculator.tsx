@@ -17,7 +17,7 @@ import {
   detectMasterNumbers,
   interpretations
 } from "@/lib/numerology";
-import type { NumerologyReading } from "@shared/schema";
+import type { NumerologyReading } from "@/lib/schema";
 
 export function NumerologyCalculator() {
   const { t, language } = useLanguage();

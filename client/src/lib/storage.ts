@@ -1,4 +1,4 @@
-import { NumerologyReading, CompatibilityTest } from "@shared/schema";
+import { NumerologyReading, CompatibilityTest } from "@/lib/schema";
 
 const READINGS_KEY = 'numerologyReadings';
 const COMPATIBILITY_KEY = 'compatibilityTests';

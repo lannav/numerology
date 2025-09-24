@@ -6,7 +6,7 @@ import { Trash2, BookOpen, Heart } from "lucide-react";
 import { useLanguage } from "@/hooks/use-language";
 import { useToast } from "@/hooks/use-toast";
 import { LocalStorage } from "@/lib/storage";
-import type { NumerologyReading, CompatibilityTest } from "@shared/schema";
+import type { NumerologyReading, CompatibilityTest } from "@/lib/schema";
 
 export function ReadingsHistory() {
   const { t } = useLanguage();

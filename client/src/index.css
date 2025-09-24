@@ -152,8 +152,9 @@
     font-size: 3rem;
     font-weight: bold;
     color: var(--gold);
-    background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+    background: hsl(var(--background));
     position: relative;
+    z-index: 10;
   }
   
   .number-circle::before {
@@ -184,6 +185,7 @@
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
   }
+
   
   .stars-bg {
     background-image: 

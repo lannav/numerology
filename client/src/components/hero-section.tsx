@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/hooks/use-language";
 
 export function HeroSection() {
   const { t } = useLanguage();
   const [currentNumber, setCurrentNumber] = useState(8);
+  const [rotation, setRotation] = useState(0);
+  const animationRef = useRef<number>();
 
   const scrollToCalculator = () => {
     const element = document.getElementById('calculator');
@@ -23,6 +25,20 @@ export function HeroSection() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const animate = () => {
+      setRotation(prev => (prev + 0.5) % 360);
+      animationRef.current = requestAnimationFrame(animate);
+    };
+    animationRef.current = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section className="pt-24 pb-16 stars-bg relative overflow-hidden min-h-screen flex items-center">
       <div className="container mx-auto px-4 text-center">
@@ -36,19 +52,37 @@ export function HeroSection() {
           
           {/* Mystical Number Wheel */}
           <div className="relative mx-auto w-80 h-80 mb-12 fade-in">
-            <div className="number-circle mx-auto">
+            {/* Main center number */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 number-circle z-10">
               <span>{currentNumber}</span>
             </div>
-            {/* Surrounding numbers with rotation */}
-            <div className="absolute inset-0 flex items-center justify-center animate-spin" style={{animationDuration: '20s'}}>
-              <div className="absolute text-2xl font-bold text-primary" style={{top: '10%', left: '50%', transform: 'translateX(-50%)'}}>1</div>
-              <div className="absolute text-2xl font-bold text-primary" style={{top: '20%', right: '20%'}}>2</div>
-              <div className="absolute text-2xl font-bold text-primary" style={{top: '50%', right: '5%'}}>3</div>
-              <div className="absolute text-2xl font-bold text-primary" style={{bottom: '20%', right: '20%'}}>4</div>
-              <div className="absolute text-2xl font-bold text-primary" style={{bottom: '10%', left: '50%', transform: 'translateX(-50%)'}}>5</div>
-              <div className="absolute text-2xl font-bold text-primary" style={{bottom: '20%', left: '20%'}}>6</div>
-              <div className="absolute text-2xl font-bold text-primary" style={{top: '50%', left: '5%'}}>7</div>
-              <div className="absolute text-2xl font-bold text-primary" style={{top: '20%', left: '20%'}}>9</div>
+            
+            {/* Perfect circular orbit */}
+            <div className="absolute inset-0">
+              {[1, 2, 3, 4, 5, 6, 7, 9].map((number, index) => {
+                const baseAngle = (index * 45); // 8 numbers * 45 degrees = 360 degrees
+                const currentAngle = (baseAngle + rotation) * (Math.PI / 180); // Convert to radians
+                const radius = 140; // Distance from center
+                const centerX = 160; // Half of container width (320px / 2)
+                const centerY = 160; // Half of container height (320px / 2)
+                
+                const x = centerX + radius * Math.cos(currentAngle);
+                const y = centerY + radius * Math.sin(currentAngle);
+                
+                return (
+                  <div
+                    key={number}
+                    className="absolute text-2xl font-bold text-primary transition-all duration-75 ease-linear"
+                    style={{
+                      left: `${x}px`,
+                      top: `${y}px`,
+                      transform: 'translate(-50%, -50%)',
+                    }}
+                  >
+                    {number}
+                  </div>
+                );
+              })}
             </div>
           </div>
           
